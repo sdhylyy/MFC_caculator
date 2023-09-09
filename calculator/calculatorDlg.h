@@ -9,13 +9,13 @@
 class CcalculatorDlg : public CDialogEx
 {
 private:
-	CFont font;
-	CFont font2;
-	double result;
-	double preNum;
-	int operation;  //0-3 represents +-*/
-	bool hasDP;   //判断是否已有小数点
-	int status; 
+	CFont m_font;
+	CFont m_font2;
+	double m_result;
+	double m_preNum;
+	int m_operation;  //0-3 represents +-*/
+	bool m_hasDP;   //判断是否已有小数点
+	int m_status; 
 	void init();
 	void addNumber(CString num);  
 	void operationFunc(int index);

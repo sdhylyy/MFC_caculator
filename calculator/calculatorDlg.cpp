@@ -127,11 +127,11 @@ BOOL CcalculatorDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	 //TODO: Add extra initialization here
-	font.CreatePointFont(200, _T("Arial"));             // lpszFacename
-	font2.CreatePointFont(150, _T("Arial"));
+	m_font.CreatePointFont(200, _T("Arial"));             // lpszFacename
+	m_font2.CreatePointFont(150, _T("Arial"));
 
-	GetDlgItem(IDC_TEXT)->SetFont(&font,true);
-	GetDlgItem(IDC_TEXT2)->SetFont(&font2);
+	GetDlgItem(IDC_TEXT)->SetFont(&m_font,true);
+	GetDlgItem(IDC_TEXT2)->SetFont(&m_font2);
 
 	init();
 
@@ -157,27 +157,7 @@ void CcalculatorDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CcalculatorDlg::OnPaint()
 {
-	if (IsIconic())
-	{
-		CPaintDC dc(this); // device context for painting
-
-		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
-
-		// Center icon in client rectangle
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
-		CRect rect;
-		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
-
-		// Draw the icon
-		dc.DrawIcon(x, y, m_hIcon);
-	}
-	else
-	{
-		CDialogEx::OnPaint();
-	}
+	
 }
 
 // The system calls this function to obtain the cursor to display while the user drags
@@ -188,19 +168,19 @@ HCURSOR CcalculatorDlg::OnQueryDragIcon()
 }
 
 void CcalculatorDlg::init() {
-	result = 0;
-	preNum = 0;
-	operation = 0;
-	status = 1;
+	m_result = 0;
+	m_preNum = 0;
+	m_operation = 0;
+	m_status = 1;
 	m_text2 = _T("");
 	m_text = _T("0");
-	hasDP = false;
+	m_hasDP = false;
 }
 
 void CcalculatorDlg::addNumber(CString num){
-	if (status) {
+	if (m_status) {
 		m_text = num;
-		status = 0;
+		m_status = 0;
 	}
 	else {
 		m_text += num;
@@ -227,10 +207,10 @@ void CcalculatorDlg::operationFunc(int index){
 		UpdateData(FALSE);
 		return;
 	}
-	preNum = _tstof(m_text);
-	status = 1;
-	hasDP = 0;
-	operation = index;
+	m_preNum = _tstof(m_text);
+	m_status = 1;
+	m_hasDP = 0;
+	m_operation = index;
 	m_text2 = m_text;
 	switch (index) {
 	case 0:
@@ -261,7 +241,7 @@ void CcalculatorDlg::OnBnClickedButtonZero()
 	if (m_text.GetLength() == 1 && _ttoi(m_text) == 0) {
 		return;
 	}
-	if (status) {
+	if (m_status) {
 		m_text = s;
 	}
 	else {
@@ -365,16 +345,16 @@ void CcalculatorDlg::OnBnClickedButtonNine()
 void CcalculatorDlg::OnBnClickedButtonDot()
 {
 	// TODO: Add your control notification handler code here
-	if (hasDP) {
+	if (m_hasDP) {
 		return;
 	}
-	if (status) {
-		status = 0;
+	if (m_status) {
+		m_status = 0;
 	}
 	CString s(".");
 	m_text += s;
 	UpdateData(FALSE);
-	hasDP = true;
+	m_hasDP = true;
 }
 
 void CcalculatorDlg::OnBnClickedButtonPlus()
@@ -424,36 +404,36 @@ void CcalculatorDlg::OnBnClickedButtonEqual()
 	double curr= _tstof(m_text);
 	m_text2 += m_text;
 	m_text2 += _T("=");
-	switch (operation) {
+	switch (m_operation) {
 	case 0:
-		result = curr + preNum;
-		m_text = std::to_string(result).c_str();
+		m_result = curr + m_preNum;
+		m_text = std::to_string(m_result).c_str();
 		break;
 	case 1:
-		result =  preNum - curr;
-		m_text = std::to_string(result).c_str();
+		m_result =  m_preNum - curr;
+		m_text = std::to_string(m_result).c_str();
 		break;
 	case 2:
-		result = curr * preNum;
-		m_text = std::to_string(result).c_str();
+		m_result = curr * m_preNum;
+		m_text = std::to_string(m_result).c_str();
 		break;
 	case 3:
 		if (curr == 0.0) {
 			m_text = _T("除数不能为零");
-			result = 0;
-			preNum = 0;
+			m_result = 0;
+			m_preNum = 0;
 			m_text2 = _T("");
 			break;
 		}
-		status = 1;
-		hasDP = false;
-		operation = 0;
-		result = preNum/curr;
-		m_text = std::to_string(result).c_str();
+		m_status = 1;
+		m_hasDP = false;
+		m_operation = 0;
+		m_result = m_preNum/curr;
+		m_text = std::to_string(m_result).c_str();
 		break;
 	}
-	operation = 0;
-	status = 1;
+	m_operation = 0;
+	m_status = 1;
 	UpdateData(FALSE);
 }
 
