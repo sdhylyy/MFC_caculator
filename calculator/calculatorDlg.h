@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include"CalculatorModel.h"
 
 // CcalculatorDlg dialog
 class CcalculatorDlg : public CDialogEx
@@ -11,15 +11,18 @@ class CcalculatorDlg : public CDialogEx
 private:
 	CFont m_font;
 	CFont m_font2;
-	double m_result;
-	double m_preNum;
-	int m_operation;  //0-3 represents +-*/
-	bool m_hasDP;   //判断是否已有小数点
-	int m_status; 
+	//double m_result;
+	//double m_preNum;
+	//int m_operation;  //0-3 represents +-*/
+	//bool m_hasDP;   //判断是否已有小数点
+	//int m_status; 
+	CalculatorModel myCalculator;
+
 	void init();
 	void addNumber(CString num);  
-	void operationFunc(int index);
+	void operationFunc(CalculatorModel::OPARATION op);
 	bool isNumber(CString& s);
+	void updateView();
 
 // Construction
 public:
