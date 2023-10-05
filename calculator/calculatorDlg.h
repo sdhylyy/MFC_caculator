@@ -73,6 +73,7 @@ protected:
 private:
 	CString m_text;
 	CString m_text2;
+	CFont m_buttonFont;
 public:
 	afx_msg void OnBnClickedButtonZero();
 	afx_msg void OnBnClickedButtonOne();

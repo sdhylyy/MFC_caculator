@@ -213,23 +213,59 @@ void CcalculatorDlg::doResize() {
 	int gridHeight = (rect.Height() - textHeight - bottomGap) / 5;
 	int buttonWidth = gridWidth - wGap;
 	int buttonHeight = gridHeight - hGap;
+	m_buttonFont.DeleteObject();
+	m_buttonFont.CreatePointFont(buttonHeight*3, _T("Arial"));
 	m_btnReset.MoveWindow(gridWidth * 3 + wGap, textHeight, buttonWidth, buttonHeight);
+	m_btnReset.SetFont(&m_buttonFont);
+	m_btnReset.Invalidate();
 	m_btnNumberOne.MoveWindow(wGap, textHeight + gridHeight, buttonWidth, buttonHeight);
+	m_btnNumberOne.SetFont(&m_buttonFont);
+	m_btnNumberOne.Invalidate();
 	m_btnNumberTwo.MoveWindow(gridWidth + wGap, textHeight + gridHeight, buttonWidth, buttonHeight);
+	m_btnNumberTwo.SetFont(&m_buttonFont);
+	m_btnNumberTwo.Invalidate();
 	m_btnNumberThree.MoveWindow(gridWidth * 2 + wGap, textHeight + gridHeight, buttonWidth, buttonHeight);
+	m_btnNumberThree.SetFont(&m_buttonFont);
+	m_btnNumberThree.Invalidate();
 	m_btnAdd.MoveWindow(gridWidth * 3 + wGap, textHeight + gridHeight, buttonWidth, buttonHeight);
+	m_btnAdd.SetFont(&m_buttonFont);
+	m_btnAdd.Invalidate();
 	m_btnNumberFour.MoveWindow(wGap, textHeight + gridHeight * 2, buttonWidth, buttonHeight);
+	m_btnNumberFour.SetFont(&m_buttonFont);
+	m_btnNumberFour.Invalidate();
 	m_btnNumberFive.MoveWindow(gridWidth + wGap, textHeight + gridHeight * 2, buttonWidth, buttonHeight);
+	m_btnNumberFive.SetFont(&m_buttonFont);
+	m_btnNumberFive.Invalidate();
 	m_btnNumberSix.MoveWindow(gridWidth * 2 + wGap, textHeight + gridHeight * 2, buttonWidth, buttonHeight);
+	m_btnNumberSix.SetFont(&m_buttonFont);
+	m_btnNumberSix.Invalidate();
 	m_btnMinus.MoveWindow(gridWidth * 3 + wGap, textHeight + gridHeight * 2, buttonWidth, buttonHeight);
+	m_btnMinus.SetFont(&m_buttonFont);
+	m_btnMinus.Invalidate();
 	m_btnNumberSeven.MoveWindow(wGap, textHeight + gridHeight * 3, buttonWidth, buttonHeight);
+	m_btnNumberSeven.SetFont(&m_buttonFont);
+	m_btnNumberSeven.Invalidate();
 	m_btnNumberEight.MoveWindow(gridWidth + wGap, textHeight + gridHeight * 3, buttonWidth, buttonHeight);
+	m_btnNumberEight.SetFont(&m_buttonFont);
+	m_btnNumberEight.Invalidate();
 	m_btnNumberNine.MoveWindow(gridWidth * 2 + wGap, textHeight + gridHeight * 3, buttonWidth, buttonHeight);
+	m_btnNumberNine.SetFont(&m_buttonFont);
+	m_btnNumberNine.Invalidate();
 	m_btnMultiply.MoveWindow(gridWidth * 3 + wGap, textHeight + gridHeight * 3, buttonWidth, buttonHeight);
+	m_btnMultiply.SetFont(&m_buttonFont);
+	m_btnMultiply.Invalidate();
 	m_btnDot.MoveWindow(wGap, textHeight + gridHeight * 4, buttonWidth, buttonHeight);
+	m_btnDot.SetFont(&m_buttonFont);
+	m_btnDot.Invalidate();
 	m_btnNumberZero.MoveWindow(gridWidth + wGap, textHeight + gridHeight * 4, buttonWidth, buttonHeight);
+	m_btnNumberZero.SetFont(&m_buttonFont);
+	m_btnNumberZero.Invalidate();
 	m_btnEqual.MoveWindow(gridWidth * 2 + wGap, textHeight + gridHeight * 4, buttonWidth, buttonHeight);
+	m_btnEqual.SetFont(&m_buttonFont);
+	m_btnEqual.Invalidate();
 	m_btnDivide.MoveWindow(gridWidth * 3 + wGap, textHeight + gridHeight * 4, buttonWidth, buttonHeight);
+	m_btnDivide.SetFont(&m_buttonFont);
+	m_btnDivide.Invalidate();
 }
 
 void CcalculatorDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -462,5 +498,8 @@ void CcalculatorDlg::OnSize(UINT nType, int cx, int cy)
 	CDialogEx::OnSize(nType, cx, cy);
 
 	// TODO: Add your message handler code here
-	doResize();
+	if (IsWindowVisible()) {
+		doResize();
+	}
+
 }
