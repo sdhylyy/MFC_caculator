@@ -155,3 +155,70 @@ CString CalculatorModel::getText() {
 CString CalculatorModel::getText2() {
 	return m_text2;
 }
+
+void CalculatorModel::onChar(UINT nChar) {
+	CString s("");
+	switch (nChar) {
+	case '0':
+		s = TEXT("0");
+		addNumber(s);
+		break;
+	case '1':
+		s = TEXT("1");
+		addNumber(s);
+		break;
+	case '2':
+		s = TEXT("2");
+		addNumber(s);
+		break;
+	case '3':
+		s = TEXT("3");
+		addNumber(s);
+		break;
+	case '4':
+		s = TEXT("4");
+		addNumber(s);
+		break;
+	case '5':
+		s = TEXT("5");
+		addNumber(s);
+		break;
+	case '6':
+		s = TEXT("6");
+		addNumber(s);
+		break;
+	case '7':
+		s = TEXT("7");
+		addNumber(s);
+		break;
+	case '8':
+		s = TEXT("8");
+		addNumber(s);
+		break;
+	case '9':
+		s = TEXT("9");
+		addNumber(s);
+		break;
+	case '.':
+		addDot();
+		break;
+	case 'c':
+		init();
+		break;
+	case '+':
+		operationFunc(CalculatorModel::PLUS);
+		break;
+	case '-':
+		operationFunc(CalculatorModel::MINUS);
+		break;
+	case '*':
+		operationFunc(CalculatorModel::MULTIPLY);
+		break;
+	case '/':
+		operationFunc(CalculatorModel::DIVIDE);
+		break;
+	case '=':
+		operationFunc(CalculatorModel::EQUAL);
+		break;
+	}
+}

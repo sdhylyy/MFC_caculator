@@ -72,6 +72,7 @@ BOOL CcalculatorApp::InitInstance()
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
 	CcalculatorDlg dlg;
+
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)
@@ -102,6 +103,8 @@ BOOL CcalculatorApp::InitInstance()
 
 	// Since the dialog has been closed, return FALSE so that we exit the
 	//  application, rather than start the application's message pump.
+
+
 	return FALSE;
 }
 

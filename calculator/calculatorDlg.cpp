@@ -63,11 +63,61 @@ CcalculatorDlg::CcalculatorDlg(CWnd* pParent /*=nullptr*/)
 	, m_text2(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	CString s0("0");
+	m_btnNumberZero.item = new NumberItem(s0);
+	CString s1("1");
+	m_btnNumberOne.item = new NumberItem(s1);
+	CString s2("2");
+	m_btnNumberTwo.item = new NumberItem(s2);
+	CString s3("3");
+	m_btnNumberThree.item = new NumberItem(s3);
+	CString s4("4");
+	m_btnNumberFour.item = new NumberItem(s4);
+	CString s5("5");
+	m_btnNumberFive.item = new NumberItem(s5);
+	CString s6("6");
+	m_btnNumberSix.item = new NumberItem(s6);
+	CString s7("7");
+	m_btnNumberSeven.item = new NumberItem(s7);
+	CString s8("8");
+	m_btnNumberEight.item = new NumberItem(s8);
+	CString s9("9");
+	m_btnNumberNine.item = new NumberItem(s9);
+	CalculatorModel::OPARATION op= CalculatorModel::PLUS;
+	m_btnAdd.item = new OperationItem(op);
+	CalculatorModel::OPARATION op2 = CalculatorModel::MINUS;
+	m_btnMinus.item = new OperationItem(op2);
+	CalculatorModel::OPARATION op3 = CalculatorModel::MULTIPLY;
+	m_btnMultiply.item = new OperationItem(op3);
+	CalculatorModel::OPARATION op4 = CalculatorModel::DIVIDE;
+	m_btnDivide.item = new OperationItem(op4);
+	CalculatorModel::OPARATION op5 = CalculatorModel::EQUAL;
+	m_btnEqual.item = new OperationItem(op5);
+	m_btnDot.item = new DotItem();
+	m_btnReset.item = new ResetItem();
 }
 
 void CcalculatorDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_BUTTON_ZERO, m_btnNumberZero);
+	DDX_Control(pDX, IDC_BUTTON_ONE, m_btnNumberOne);
+	DDX_Control(pDX, IDC_BUTTON_TWO, m_btnNumberTwo);
+	DDX_Control(pDX, IDC_BUTTON_THREE, m_btnNumberThree);
+	DDX_Control(pDX, IDC_BUTTON_FOUR, m_btnNumberFour);
+	DDX_Control(pDX, IDC_BUTTON_FIVE, m_btnNumberFive);
+	DDX_Control(pDX, IDC_BUTTON_SIX, m_btnNumberSix);
+	DDX_Control(pDX, IDC_BUTTON_SEVEN, m_btnNumberSeven);
+	DDX_Control(pDX, IDC_BUTTON_EIGHT, m_btnNumberEight);
+	DDX_Control(pDX, IDC_BUTTON_NINE, m_btnNumberNine);
+	DDX_Control(pDX, IDC_BUTTON_DOT, m_btnDot);
+	DDX_Control(pDX, IDC_BUTTON_PLUS, m_btnAdd);
+	DDX_Control(pDX, IDC_BUTTON_MINUS, m_btnMinus);
+	DDX_Control(pDX, IDC_BUTTON_MULTIPLY, m_btnMultiply);
+	DDX_Control(pDX, IDC_BUTTON_DIVIDE, m_btnDivide);
+	DDX_Control(pDX, IDC_BUTTON_EQUAL, m_btnEqual);
+	DDX_Control(pDX, IDC_BUTTON_RESET, m_btnReset);
+
 }
 
 BEGIN_MESSAGE_MAP(CcalculatorDlg, CDialogEx)
@@ -94,6 +144,7 @@ BEGIN_MESSAGE_MAP(CcalculatorDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_EQUAL, &CcalculatorDlg::OnBnClickedButtonEqual)
 	ON_WM_CHAR()
 //	ON_WM_KEYDOWN()
+ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 
@@ -136,8 +187,49 @@ BOOL CcalculatorDlg::OnInitDialog()
 	GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
 	init();
+	CRect rect;
+	GetWindowRect(&rect);
+	SetWindowPos(
+		NULL,               // specifies that the window created with the HWND_TOPMOST style is placed above all non-topmost windows and stays above them, even when deactivated
+		rect.left,          // New X position
+		rect.top,           // New Y position
+		300,           // New width of the window
+		400,          // New height of the window
+		SWP_NOZORDER | SWP_NOACTIVATE  // Ignores the hWndInsertAfter parameter; Does not activate the window
+	);
+	doResize();
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+void CcalculatorDlg::doResize() {
+	CRect rect;
+	GetClientRect(&rect);
+	int hGap = 5;
+	int wGap = 5;
+	int textHeight = 144;
+	int bottomGap = 5;
+	int gridWidth = (rect.Width() - wGap) / 4;
+	int gridHeight = (rect.Height() - textHeight - bottomGap) / 5;
+	int buttonWidth = gridWidth - wGap;
+	int buttonHeight = gridHeight - hGap;
+	m_btnReset.MoveWindow(gridWidth * 3 + wGap, textHeight, buttonWidth, buttonHeight);
+	m_btnNumberOne.MoveWindow(wGap, textHeight + gridHeight, buttonWidth, buttonHeight);
+	m_btnNumberTwo.MoveWindow(gridWidth + wGap, textHeight + gridHeight, buttonWidth, buttonHeight);
+	m_btnNumberThree.MoveWindow(gridWidth * 2 + wGap, textHeight + gridHeight, buttonWidth, buttonHeight);
+	m_btnAdd.MoveWindow(gridWidth * 3 + wGap, textHeight + gridHeight, buttonWidth, buttonHeight);
+	m_btnNumberFour.MoveWindow(wGap, textHeight + gridHeight * 2, buttonWidth, buttonHeight);
+	m_btnNumberFive.MoveWindow(gridWidth + wGap, textHeight + gridHeight * 2, buttonWidth, buttonHeight);
+	m_btnNumberSix.MoveWindow(gridWidth * 2 + wGap, textHeight + gridHeight * 2, buttonWidth, buttonHeight);
+	m_btnMinus.MoveWindow(gridWidth * 3 + wGap, textHeight + gridHeight * 2, buttonWidth, buttonHeight);
+	m_btnNumberSeven.MoveWindow(wGap, textHeight + gridHeight * 3, buttonWidth, buttonHeight);
+	m_btnNumberEight.MoveWindow(gridWidth + wGap, textHeight + gridHeight * 3, buttonWidth, buttonHeight);
+	m_btnNumberNine.MoveWindow(gridWidth * 2 + wGap, textHeight + gridHeight * 3, buttonWidth, buttonHeight);
+	m_btnMultiply.MoveWindow(gridWidth * 3 + wGap, textHeight + gridHeight * 3, buttonWidth, buttonHeight);
+	m_btnDot.MoveWindow(wGap, textHeight + gridHeight * 4, buttonWidth, buttonHeight);
+	m_btnNumberZero.MoveWindow(gridWidth + wGap, textHeight + gridHeight * 4, buttonWidth, buttonHeight);
+	m_btnEqual.MoveWindow(gridWidth * 2 + wGap, textHeight + gridHeight * 4, buttonWidth, buttonHeight);
+	m_btnDivide.MoveWindow(gridWidth * 3 + wGap, textHeight + gridHeight * 4, buttonWidth, buttonHeight);
 }
 
 void CcalculatorDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -181,8 +273,7 @@ void CcalculatorDlg::OnBnClickedButtonZero()
 {
 	// TODO: Add your control notification handler code here
 
-	CString s("0");
-	addNumber(s);
+	m_btnNumberZero.item->doOperation(&myCalculator);
 
 	updateView();
 }
@@ -191,8 +282,7 @@ void CcalculatorDlg::OnBnClickedButtonZero()
 void CcalculatorDlg::OnBnClickedButtonOne()
 {
 	// TODO: Add your control notification handler code here
-	CString s("1");
-	addNumber(s);
+	m_btnNumberOne.item->doOperation(&myCalculator);
 
 	updateView();
 }
@@ -201,8 +291,7 @@ void CcalculatorDlg::OnBnClickedButtonOne()
 void CcalculatorDlg::OnBnClickedButtonTwo()
 {
 	// TODO: Add your control notification handler code here
-	CString s("2");
-	addNumber(s);
+	m_btnNumberTwo.item->doOperation(&myCalculator);
 
 	updateView();
 }
@@ -211,8 +300,7 @@ void CcalculatorDlg::OnBnClickedButtonTwo()
 void CcalculatorDlg::OnBnClickedButtonThree()
 {
 	// TODO: Add your control notification handler code here
-	CString s("3");
-	addNumber(s);
+	m_btnNumberThree.item->doOperation(&myCalculator);
 
 	updateView();
 }
@@ -221,8 +309,7 @@ void CcalculatorDlg::OnBnClickedButtonThree()
 void CcalculatorDlg::OnBnClickedButtonFour()
 {
 	// TODO: Add your control notification handler code here
-	CString s("4");
-	addNumber(s);
+	m_btnNumberFour.item->doOperation(&myCalculator);
 
 	updateView();
 }
@@ -231,8 +318,7 @@ void CcalculatorDlg::OnBnClickedButtonFour()
 void CcalculatorDlg::OnBnClickedButtonFive()
 {
 	// TODO: Add your control notification handler code here
-	CString s("5");
-	addNumber(s);
+	m_btnNumberFive.item->doOperation(&myCalculator);
 
 	updateView();
 }
@@ -241,8 +327,7 @@ void CcalculatorDlg::OnBnClickedButtonFive()
 void CcalculatorDlg::OnBnClickedButtonSix()
 {
 	// TODO: Add your control notification handler code here
-	CString s("6");
-	addNumber(s);
+	m_btnNumberSix.item->doOperation(&myCalculator);
 
 	updateView();
 }
@@ -251,8 +336,7 @@ void CcalculatorDlg::OnBnClickedButtonSix()
 void CcalculatorDlg::OnBnClickedButtonSeven()
 {
 	// TODO: Add your control notification handler code here
-	CString s("7");
-	addNumber(s);
+	m_btnNumberSeven.item->doOperation(&myCalculator);
 
 	updateView();
 }
@@ -261,8 +345,7 @@ void CcalculatorDlg::OnBnClickedButtonSeven()
 void CcalculatorDlg::OnBnClickedButtonEight()
 {
 	// TODO: Add your control notification handler code here
-	CString s("8");
-	addNumber(s);
+	m_btnNumberEight.item->doOperation(&myCalculator);
 
 	updateView();
 }
@@ -271,8 +354,7 @@ void CcalculatorDlg::OnBnClickedButtonEight()
 void CcalculatorDlg::OnBnClickedButtonNine()
 {
 	// TODO: Add your control notification handler code here
-	CString s("9");
-	addNumber(s);
+	m_btnNumberNine.item->doOperation(&myCalculator);
 
 	updateView();
 }
@@ -281,7 +363,7 @@ void CcalculatorDlg::OnBnClickedButtonNine()
 void CcalculatorDlg::OnBnClickedButtonDot()
 {
 	// TODO: Add your control notification handler code here
-	myCalculator.addDot();
+	m_btnDot.item->doOperation(&myCalculator);
 	updateView();
 
 }
@@ -289,7 +371,7 @@ void CcalculatorDlg::OnBnClickedButtonDot()
 void CcalculatorDlg::OnBnClickedButtonPlus()
 {
 	// TODO: Add your control notification handler code here
-	operationFunc(CalculatorModel::PLUS);
+	m_btnAdd.item->doOperation(&myCalculator);
 	updateView();
 }
 
@@ -297,7 +379,7 @@ void CcalculatorDlg::OnBnClickedButtonPlus()
 void CcalculatorDlg::OnBnClickedButtonMinus()
 {
 	// TODO: Add your control notification handler code here
-	operationFunc(CalculatorModel::MINUS);
+	m_btnMinus.item->doOperation(&myCalculator);
 	updateView();
 }
 
@@ -305,7 +387,7 @@ void CcalculatorDlg::OnBnClickedButtonMinus()
 void CcalculatorDlg::OnBnClickedButtonMultiply()
 {
 	// TODO: Add your control notification handler code here
-	operationFunc(CalculatorModel::MULTIPLY);
+	m_btnMultiply.item->doOperation(&myCalculator);
 	updateView();
 }
 
@@ -313,7 +395,7 @@ void CcalculatorDlg::OnBnClickedButtonMultiply()
 void CcalculatorDlg::OnBnClickedButtonDivide()
 {
 	// TODO: Add your control notification handler code here
-	operationFunc(CalculatorModel::DIVIDE);
+	m_btnDivide.item->doOperation(&myCalculator);
 	updateView();
 }
 
@@ -321,7 +403,7 @@ void CcalculatorDlg::OnBnClickedButtonDivide()
 void CcalculatorDlg::OnBnClickedButtonReset()
 {
 	// TODO: Add your control notification handler code here
-	init();
+	m_btnReset.item->doOperation(&myCalculator);
 	updateView();
 }
 
@@ -329,66 +411,15 @@ void CcalculatorDlg::OnBnClickedButtonReset()
 void CcalculatorDlg::OnBnClickedButtonEqual()
 {
 	// TODO: Add your control notification handler code here
-	myCalculator.operationFunc(CalculatorModel::EQUAL);
+	m_btnEqual.item->doOperation(&myCalculator);
 	updateView();
 }
 
 void CcalculatorDlg::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	 //TODO: Add your message handler code here and/or call default
-	switch (nChar) {
-	case '0':
-		OnBnClickedButtonZero();
-		break;
-	case '1':
-		OnBnClickedButtonOne();
-		break;
-	case '2':
-		OnBnClickedButtonTwo();
-		break;
-	case '3':
-		OnBnClickedButtonThree();
-		break;
-	case '4':
-		OnBnClickedButtonFour();
-		break;
-	case '5':
-		OnBnClickedButtonFive();
-		break;
-	case '6':
-		OnBnClickedButtonSix();
-		break;
-	case '7':
-		OnBnClickedButtonSeven();
-		break;
-	case '8':
-		OnBnClickedButtonEight();
-		break;
-	case '9':
-		OnBnClickedButtonNine();
-		break;
-	case '.':
-		OnBnClickedButtonDot();
-		break;
-	case 8:
-		OnBnClickedButtonReset();
-		break;
-	case '+':
-		OnBnClickedButtonPlus();
-		break;
-	case '-':
-		OnBnClickedButtonMinus();
-		break;
-	case '*':
-		OnBnClickedButtonMultiply();
-		break;
-	case '/':
-		OnBnClickedButtonDivide();
-		break;
-	case '=':
-		OnBnClickedButtonEqual();
-		break;
-	}
+	myCalculator.onChar(nChar);
+	updateView();
 }
 
 BOOL CcalculatorDlg::PreTranslateMessage(MSG* pMsg)
@@ -403,7 +434,7 @@ void CcalculatorDlg::updateView() {
  //   dc.TextOut(100,100, myCalculator.getText());
 	CClientDC dc(this);
 	Graphics graphics(dc);
-	RedrawWindow(CRect(0, 0, static_cast<float>(dc.GetDeviceCaps(HORZRES)), 200));
+	RedrawWindow(CRect(0, 0, static_cast<int>(dc.GetDeviceCaps(HORZRES)), 200));
 
 	Gdiplus::Font font(L"Arial", 16); // Font name and size
 	SolidBrush brush(Color(255, 0, 0, 0)); // Text color (Black)
@@ -423,4 +454,13 @@ void CcalculatorDlg::updateView() {
 void CcalculatorDlg::OnPaint()
 {
 	CDialogEx::OnPaint();
+}
+
+
+void CcalculatorDlg::OnSize(UINT nType, int cx, int cy)
+{
+	CDialogEx::OnSize(nType, cx, cy);
+
+	// TODO: Add your message handler code here
+	doResize();
 }

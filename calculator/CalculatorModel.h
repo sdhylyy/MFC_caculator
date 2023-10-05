@@ -13,6 +13,7 @@ public:
 	CString getResult();
 	CString getText();
 	CString getText2();
+	void onChar(UINT nChar);
 
 private:
 	double m_result;

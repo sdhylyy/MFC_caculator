@@ -185,23 +185,35 @@
   <ItemGroup>
     <ClInclude Include="BasicCalculatorModel.h" />
     <ClInclude Include="calculator.h" />
+    <ClInclude Include="CalculatorButton.h" />
     <ClInclude Include="calculatorDlg.h" />
     <ClInclude Include="CalculatorModel.h" />
+    <ClInclude Include="DotItem.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="NumberItem.h" />
+    <ClInclude Include="OperationItem.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="ResetItem.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="calculator.cpp" />
+    <ClCompile Include="CalculatorButton.cpp" />
     <ClCompile Include="calculatorDlg.cpp" />
     <ClCompile Include="CalculatorModel.cpp" />
+    <ClCompile Include="DotItem.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="NumberItem.cpp" />
+    <ClCompile Include="OperationItem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ResetItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="calculator.rc" />
